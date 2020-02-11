@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+    <title>{{ name }}</title>
+</head>
+<body>
+{% block content %}
+<a href="/">Выйти на главную страницу</a>
+
+<form action="" method="POST">
+    <input type="text" name="user">
+    <input type="submit" value="ok">
+</form>
+
+
+
+<h2>Логин: {{ user }}</h2>
+{% endblock %}
+</body>
+</html>
