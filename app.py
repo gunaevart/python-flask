@@ -41,9 +41,10 @@ def test(id):
         else:
             return f'<h1>с id  {id} пользователь не найтен</h1>'
 
-
-
-    #return f"<h1>{a}</h1>"
+@app.route('/delete')
+def delete_visits():
+    session.pop('Владимир', None)  # удаление данных о посещениях
+    return 'Visits deleted'
 
 
 
