@@ -1,19 +1,26 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from file import File
 
 app = Flask(__name__)
 app.secret_key = 'hello'
 
+
 @app.route('/')
 def index():
-    return render_template('index.html', title='Главная страница')
+    db = File.Db()
+    if 'Владимир' in session:
+        user = session['Владимир']
+    else:
+        user = True
+    return render_template('index.html', db=db, title='Главная страница', user=user)
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
         user = request.form['user']
         if user == 'admin':
-            session['Владимир'] = user
+            session['Владимир'] = 'Владимир'
             return redirect(url_for('admin'))
     return render_template('login.html')
 
@@ -25,10 +32,19 @@ def admin():
         return render_template('admin.html', user=user)
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    lang = [{'name': 'java'}, {'name': 'python'}, {'name': 'PHP'}]
-    return jsonify({'massenges': lang[0]})
+@app.route('/test/<int:id>')
+def test(id):
+    db = File.Db()
+    for item in db:
+        if id == item['id']:
+            return render_template('user.html', login=item['login'])
+        else:
+            return f'<h1>с id  {id} пользователь не найтен</h1>'
+
+
+
+    #return f"<h1>{a}</h1>"
+
 
 
 @app.errorhandler(404)

@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
+<title>{{ title }}</title>
+    {% if user == True %}
+    <h1>Вы не авторезированые  <a href="/login">Войти</a>  </h1>
+     {% else %}
+<h1>Пользовательна сайте {{user}} </h1>
+    {% endif %}
+
+
+{% for item in db %}
+
+<h4>
+    <a href="test/{{ item['id'] }}">{{ item['login'] }}</a>
+</h4>
+{% endfor %}
 {% for i in range(10) %}
 <div class="card" style="width: 18rem;">
     <div class="card-body">
